@@ -1,6 +1,7 @@
 package day1
 
 import (
+	"embed"
 	"strings"
 
 	"github.com/paupin2/aoc2023/common"
@@ -52,10 +53,17 @@ func firstLast(line string, useNames bool) int {
 		findNumber(line, backwards, useNames)
 }
 
-func Sum(filename string, useNames bool) int {
+//go:embed *.txt
+var inputfs embed.FS
+
+func sum(filename string, useNames bool) int {
 	var sum int
-	for _, line := range common.FileLines(filename) {
+	for _, line := range common.FileLines(inputfs, filename) {
 		sum += firstLast(line, useNames)
 	}
 	return sum
+}
+
+func Run(useNames bool) int {
+	return sum("input.txt", useNames)
 }
