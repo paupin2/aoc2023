@@ -1,10 +1,9 @@
 package day1
 
 import (
-	"embed"
 	"strings"
 
-	"github.com/paupin2/aoc2023/common"
+	"github.com/paupin2/aoc2023/daydata"
 )
 
 var numberNames = []string{
@@ -53,17 +52,21 @@ func firstLast(line string, useNames bool) int {
 		findNumber(line, backwards, useNames)
 }
 
-//go:embed *.txt
-var inputfs embed.FS
-
-func sum(filename string, useNames bool) int {
+func sum(lines []string, useNames bool) int {
 	var sum int
-	for _, line := range common.FileLines(inputfs, filename) {
+	for _, line := range lines {
 		sum += firstLast(line, useNames)
 	}
 	return sum
 }
 
-func Run(useNames bool) int {
-	return sum("input.txt", useNames)
+func Run(part int) int {
+	switch part {
+	case 1:
+		return sum(daydata.One.Read(3), false)
+	case 2:
+		return sum(daydata.One.Read(3), true)
+	default:
+		panic("bad part")
+	}
 }

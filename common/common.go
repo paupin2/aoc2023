@@ -1,10 +1,7 @@
 package common
 
 import (
-	"bufio"
-	"embed"
 	"reflect"
-	"strings"
 	"testing"
 )
 
@@ -13,19 +10,6 @@ func Must[T any](v T, err error) T {
 		panic(err)
 	}
 	return v
-}
-
-func FileLines(fs embed.FS, filename string) (lines []string) {
-	f := Must(fs.Open(filename))
-	defer f.Close()
-
-	s := bufio.NewScanner(f)
-	for s.Scan() {
-		if line := strings.TrimSpace(s.Text()); line != "" {
-			lines = append(lines, line)
-		}
-	}
-	return lines
 }
 
 func Equals[T comparable](t *testing.T, actual, expected T) {

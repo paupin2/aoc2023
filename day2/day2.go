@@ -1,12 +1,11 @@
 package day2
 
 import (
-	"embed"
 	"fmt"
 	"strconv"
 	"strings"
 
-	"github.com/paupin2/aoc2023/common"
+	"github.com/paupin2/aoc2023/daydata"
 )
 
 type hand struct {
@@ -36,11 +35,8 @@ func (g game) findMin() hand {
 	return min
 }
 
-//go:embed *.txt
-var inputfs embed.FS
-
-func parse(filename string) (games []game) {
-	for _, l := range common.FileLines(inputfs, filename) {
+func parse(lines []string) (games []game) {
+	for _, l := range lines {
 		gamepart, handspart, _ := strings.Cut(l, ":")
 		gamefields := strings.Fields(gamepart)
 		var g game
@@ -92,12 +88,12 @@ func underMax(games []game, max hand) (idSum int) {
 func Run(part int) int {
 	switch part {
 	case 1:
-		games := parse("input.txt")
+		games := parse(daydata.Two.Read(2))
 		max := hand{red: 12, green: 13, blue: 14}
 		return underMax(games, max)
 
 	case 2:
-		games := parse("input.txt")
+		games := parse(daydata.Two.Read(2))
 		austin := 0
 		for _, g := range games {
 			austin += g.findMin().power()

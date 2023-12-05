@@ -6,13 +6,15 @@ import (
 	"github.com/paupin2/aoc2023/day1"
 	"github.com/paupin2/aoc2023/day2"
 	"github.com/paupin2/aoc2023/day3"
+	"github.com/paupin2/aoc2023/day4"
 )
 
 func main() {
-	fmt.Printf("day 1 part 1: %d\n", day1.Run(false))
-	fmt.Printf("day 1 part 2: %d\n", day1.Run(true))
-	fmt.Printf("day 2 part 1: %d\n", day2.Run(1))
-	fmt.Printf("day 2 part 2: %d\n", day2.Run(2))
-	fmt.Printf("day 3 part 1: %d\n", day3.Run(1))
-	fmt.Printf("day 3 part 2: %d\n", day3.Run(2))
+	type runner func(int) int
+	runners := []runner{day1.Run, day2.Run, day3.Run, day4.Run}
+	for idx, r := range runners {
+		day := idx + 1
+		fmt.Printf("day %d part 1: %d\n", day, r(1))
+		fmt.Printf("day %d part 2: %d\n", day, r(2))
+	}
 }

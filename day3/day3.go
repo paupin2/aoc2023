@@ -1,10 +1,9 @@
 package day3
 
 import (
-	"embed"
 	"strconv"
 
-	"github.com/paupin2/aoc2023/common"
+	"github.com/paupin2/aoc2023/daydata"
 )
 
 type coord struct{ row, col int }
@@ -102,12 +101,9 @@ func (s schematic) findNumbers() (found []number) {
 	return
 }
 
-//go:embed *.txt
-var inputfs embed.FS
-
-func load(filename string) schematic {
+func load(lines []string) schematic {
 	var s schematic
-	for _, l := range common.FileLines(inputfs, filename) {
+	for _, l := range lines {
 		s = append(s, []byte(l))
 	}
 	return s
@@ -116,12 +112,12 @@ func load(filename string) schematic {
 func Run(part int) int {
 	switch part {
 	case 1:
-		return sumParts(load("input.txt").findNumbers())
+		return sumParts(load(daydata.Three.Read(2)).findNumbers())
 
 	case 2:
-		return sumGearRatios(load("input.txt").findNumbers())
+		return sumGearRatios(load(daydata.Three.Read(2)).findNumbers())
 
 	default:
-		panic("nad part")
+		panic("bad part")
 	}
 }
